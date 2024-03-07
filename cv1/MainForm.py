@@ -91,7 +91,33 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionExit)
 
         self.retranslateUi(MainWindow)
+        
+        self.actionOpen.triggered.connect(self.openClick) # type: ignore
+        self.actionPoint_Polygon.triggered.connect(self.pointPolygonClick) # type: ignore
+        self.actionClear.triggered.connect(self.clearClick) # type: ignore
+        self.actionRay_Crossing_Algorithm.triggered.connect(self.rayCrossingClick) # type: ignore
+        self.actionWinding_Number_Algorithm.triggered.connect(self.windingNumberClick) # type: ignore
+        self.actionExit.triggered.connect(MainWindow.close) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
+        
+    def openClick(self):
+        pass
+        
+    def pointPolygonClick(self):
+        #Draw point or add vertex
+        self.Canvas.switchDrawing()
+        
+    def clearClick(self):
+        pass
+        
+    def rayCrossingClick(self):
+        pass
+        
+    def windingNumberClick(self):
+        pass
+        
+        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
