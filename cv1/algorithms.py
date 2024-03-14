@@ -10,7 +10,7 @@ class Algorithms:
         pass
     
     
-    def analyzePointPolygonPosition(q:QPointF, pol:QPolygonF):
+    def analyzePointPolygonPosition(self, q:QPointF, pol:QPolygonF):
         
         #Inicialize amount of intersections
         k = 0
@@ -20,20 +20,20 @@ class Algorithms:
         
         #Process all segments
         for i in range(n):
-            # Reduce coordinates
-            xir = pol[i] - q.x()
-            yir = pol[i] - q.y()
+            #Reduce coordinates
+            xir = pol[i].x() - q.x()
+            yir = pol[i].y() - q.y()
             
-            xi1r = pol[(i+1)%n] - q.x()
-            yi1r = pol[(i+1)%n] - q.y()
+            xi1r = pol[(i+1)%n].x() - q.x()
+            yi1r = pol[(i+1)%n].y() - q.y()
             
-            # Suitable segment?
+            #Suitable segment?
             if ((yi1r > 0) and (yir <= 0)) or ((yir > 0) and (yi1r <= 0)):
                
                #Compute intersection
-               xm = (xi1r * yir - xir  yi1r)/(yi1r - yir)
+               xm = (xi1r * yir - xir * yi1r)/(yi1r - yir)
                
-               # Right half plane
+               #Right half plane
                if xm > 0:       
                    k += 1  
                    
