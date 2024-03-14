@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-
+from draw import Draw
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -104,21 +104,24 @@ class Ui_MainWindow(object):
     def openClick(self):
         pass
         
+        
     def pointPolygonClick(self):
         #Draw point or add vertex
         self.Canvas.switchDrawing()
+     
         
     def clearClick(self):
         pass
         
+        
     def rayCrossingClick(self):
         pass
+        
         
     def windingNumberClick(self):
         pass
         
         
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Point and polygon position"))
@@ -136,7 +139,7 @@ class Ui_MainWindow(object):
         self.actionClear.setToolTip(_translate("MainWindow", "Clear data"))
         self.actionRay_Crossing_Algorithm.setText(_translate("MainWindow", "Ray Crossing Algorithm"))
         self.actionWinding_Number_Algorithm.setText(_translate("MainWindow", "Winding Number Algorithm"))
-from draw import Draw
+
 
 
 if __name__ == "__main__":

@@ -8,12 +8,14 @@ class Draw(QWidget):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        
         self.q = QPointF(-100, -100)
         self.pol = QPolygonF()
         self.add_vertex = True
         
         
     def mousePressEvent(self, e: QMouseEvent):
+        
         #Get coordinates of q
         x = e.position().x()
         y = e.position().y()
