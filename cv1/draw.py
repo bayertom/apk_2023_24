@@ -68,36 +68,3 @@ class Draw(QWidget):
     def switchDrawing(self):
         #Change what will be drawn
         self.add_vertex = not(self.add_vertex)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    
-    
-    
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
