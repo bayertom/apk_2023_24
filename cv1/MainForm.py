@@ -8,6 +8,7 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from draw import Draw
+from algorithms import *
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -106,16 +107,40 @@ class Ui_MainWindow(object):
         
         
     def pointPolygonClick(self):
-        #Draw point or add vertex
+        #Draw point or add vertex to polygon
         self.Canvas.switchDrawing()
      
         
     def clearClick(self):
-        pass
+        # Clear data
+        self.Canvas.clearData()
         
         
     def rayCrossingClick(self):
-        pass
+        
+        #Get data
+        q = self.Canvas.getQ()
+        pol = self.Canvas.getPol()
+        
+        #Run analysis
+        a = Algorithms()
+        result = a.analyzePointPolygonPosition(q, pol)
+        
+        #Show results
+        mb = QtWidgets.QMessageBox()
+        mb.setWindowTitle('Analyze point and polygon position')
+        
+        #Point inside
+        if result:
+            mb.setText("Point inside polygon.")
+  
+        #Point outside
+        else:
+            mb.setText("Point outside polygon.")
+            
+        #Show window
+        mb.exec()
+        
         
         
     def windingNumberClick(self):

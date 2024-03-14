@@ -68,3 +68,26 @@ class Draw(QWidget):
     def switchDrawing(self):
         #Change what will be drawn
         self.add_vertex = not(self.add_vertex)
+            
+            
+    def getQ(self):
+        #Return analyzed point
+        return self.q
+    
+    
+    def getPol(self):
+        # Return analyzed polygon
+        return self.pol
+    
+    
+    def clearData(self):
+        #Clear polygon
+        self.pol.clear()
+        
+        #Shift point
+        self.q.setX(-100)
+        self.q.setY(-100)
+        
+        #Repaint screen
+        self.repaint()
+        
