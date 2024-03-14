@@ -77,4 +77,15 @@ class Draw(QWidget):
         # Return analyzed polygon
         return self.pol
     
+    def clearData(self):
+        #Clear polygon
+        self.pol.clear()
         
+        #Shift point
+        self.q.setX(-100)
+        self.q.setY(-100)
+        
+        #Repaint screen
+        self.repaint()
+        
+            

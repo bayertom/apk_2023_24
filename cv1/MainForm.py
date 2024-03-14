@@ -112,7 +112,8 @@ class Ui_MainWindow(object):
      
         
     def clearClick(self):
-        pass
+        # Clear data
+        self.Canvas.clearData()
         
         
     def rayCrossingClick(self):
@@ -128,6 +129,16 @@ class Ui_MainWindow(object):
         #Show results
         mb = QtWidgets.QMessageBox()
         mb.setWindowTitle('Analyze point and polygon position')
+        
+        #Point inside
+        if result:
+            mb.setText("Point inside polygon.")
+  
+        #Point outside
+        else:
+            mb.setText("Point outside polygon.")
+            
+        #Show window
         mb.exec()
         
         
