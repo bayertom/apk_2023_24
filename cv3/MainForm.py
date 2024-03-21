@@ -89,7 +89,32 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionExit)
 
         self.retranslateUi(MainWindow)
+        
+        self.actionOpen.triggered.connect(self.openClick) # type: ignore
+        self.actionMinimum_bounding_rectangle.triggered.connect(self.mbrClick) # type: ignore
+        self.actionPCA.triggered.connect(self.pcaClick) # type: ignore
+        self.actionClear_results.triggered.connect(self.clearClick) # type: ignore
+        self.actionClear_all.triggered.connect(self.clearAllClick) # type: ignore
+        self.actionExit.triggered.connect(MainWindow.close) # type: ignore
+        
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
+        
+    def openClick(self):
+        pass
+    
+    def mbrClick(self):
+        pass
+    
+    def pcaClick(self):
+        pass
+    
+    def clearClick(self):
+        pass
+    
+    def clearAllClick(self):
+        pass
+    
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
