@@ -61,15 +61,10 @@ class Algorithms:
         nu = (ux**2 + uy**2)**(1/2)
         nv = (vx**2 + vy**2)**(1/2)
         
+        #Correct interval
         arg = dot/(nu*nv)
         
-        if arg < -1:
-            arg = -1
-            
-        if arg > 1:
-            arg = 1
-            
-        return acos(arg)
+        return acos(max(min(arg, 1), -1))
         
             
   
