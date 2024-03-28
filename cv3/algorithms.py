@@ -110,6 +110,7 @@ class Algorithms:
             qj = pol[index_max]
             
         return ch    
+         
             
     def mmb(self, pol:QPolygonF):
         
@@ -149,6 +150,59 @@ class Algorithms:
             pol_r.append(p_r)
             
         return pol_r
-        
     
         
+    def getArea(self, pol : QPolygonF):
+        #Return polygon area
+        area = 0
+        n = len(pol)  
+          
+        #Proccesing of vertexes
+        for i in range(n):
+            area = area + pol[i].x() * (pol[(i+1)%n].y() - pol[(i-1+n)%n].y())
+            
+        return abs(area)/2
+    
+    def resizeRectangle(self, rect: QPolygonF, build: QPolygonF):
+        #Resize rectangle to fit area of the building
+        
+        #Compute areas
+        Ab = self.getArea(build)
+        A = self.getArea(rect)
+        
+        #Compute ratio
+        k = Ab/A
+        
+        #Center of mass
+        tx = (rect[0].x() + rect[1].x() + rect[2].x() + rect[3].x()) / 4
+        ty = (rect[0].y() + rect[1].y() + rect[2].y() + rect[3].y()) / 4
+        
+        #Vectors 
+        u1x = rect[0].x() - tx
+        u1y = rect[0].y() - ty
+        u2x = rect[1].x() - tx
+        u2y = rect[1].y() - ty
+        u3x = rect[2].x() - tx
+        u3y = rect[2].y() - ty
+        u4x = rect[3].x() - tx
+        u4y = rect[3].y() - ty
+        
+        #New vertices
+        v1x = tx + sqrt(k) * u1x
+        v1y = ty + sqrt(k) * u1y
+        v2x = tx + sqrt(k) * u2x
+        v2y = ty + sqrt(k) * u2y
+        v3x = tx + sqrt(k) * u3x
+        v3y = ty + sqrt(k) * u3y
+        v4x = tx + sqrt(k) * u4x
+        v4y = ty + sqrt(k) * u4y
+        
+        v1 = QPointF(v1x, v1y)
+        v2 = QPointF(v2x, v2y)
+        v3 = QPointF(v3x, v3y)
+        v4 = QPointF(v4x, v4y)
+        
+        # Add vertices to polygon
+        rectR = QPolygonF([v1, v2, v3, v4])
+        
+        return rectR
