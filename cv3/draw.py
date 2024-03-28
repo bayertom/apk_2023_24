@@ -10,11 +10,9 @@ class Draw(QWidget):
         super().__init__(*args, **kwargs)
         
         self.building = QPolygonF()
-        self.ch = QPolygonF()
         self.mbr = QPolygonF()
 
-        
-        
+
     def mousePressEvent(self, e: QMouseEvent):
         
         #Get coordinates of q
@@ -47,14 +45,12 @@ class Draw(QWidget):
         #Draw building
         qp.drawPolygon(self.building)
         
-        #Set graphical attributes CH
-        
-        #Draw CH
-        
         #Set graphical attributes MBR
+        qp.setPen(Qt.GlobalColor.red)
+        qp.setBrush(Qt.GlobalColor.transparent)
         
         #Draw MBR
-        
+        qp.drawPolygon(self.mbr)
     
         #End drawing
         qp.end()
@@ -64,6 +60,11 @@ class Draw(QWidget):
         # Return building
         return self.building
     
+    
+    def setMBR(self, mbr):
+        # set mbr to input
+        self.mbr = mbr  
+        
     
     def clearData(self):
         #Clear building
@@ -78,4 +79,4 @@ class Draw(QWidget):
         #Repaint screen
         self.repaint()
         
-            
+        

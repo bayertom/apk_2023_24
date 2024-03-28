@@ -61,7 +61,17 @@ class Algorithms:
         nu = (ux**2 + uy**2)**(1/2)
         nv = (vx**2 + vy**2)**(1/2)
         
-        return acos(dot/(nu*nv))
+        arg = dot/(nu*nv)
+        
+        if arg < -1:
+            arg = -1
+            
+        if arg > 1:
+            arg = 1
+            
+        return acos(arg)
+        
+            
   
                    
     def cHull(self, pol:QPolygonF):
@@ -91,12 +101,13 @@ class Algorithms:
             for i in range(len(pol)):
                 
                 #Compute angle
-                omega = self.get2LineAngle(qj, qj1, qj, pol[i])
-                
-                #Update maximum
-                if omega > omega_max:
-                    omega_max = omega
-                    index_max = i
+                if qj != pol[i]:
+                    omega = self.get2LineAngle(qj, qj1, qj, pol[i])
+                    
+                    #Update maximum
+                    if omega > omega_max:
+                        omega_max = omega
+                        index_max = i
                     
             #Append point to CH
             ch.append(pol[index_max])
@@ -163,6 +174,7 @@ class Algorithms:
             
         return abs(area)/2
     
+    
     def resizeRectangle(self, rect: QPolygonF, build: QPolygonF):
         #Resize rectangle to fit area of the building
         
@@ -202,7 +214,51 @@ class Algorithms:
         v3 = QPointF(v3x, v3y)
         v4 = QPointF(v4x, v4y)
         
-        # Add vertices to polygon
+        #Add vertices to polygon
         rectR = QPolygonF([v1, v2, v3, v4])
         
         return rectR
+    
+    
+    def mbr(self, pol : QPolygonF):
+        #Create minimum bounding rectangle        
+    
+        #Compute convex hull
+        ch = self.cHull(pol)
+        
+        #Initialization
+        mmb_min = self.mmb(ch)
+        area_min = self.getArea(mmb_min)
+        sigma_min = 0
+        
+        #Process all segments of CH
+        n = len(ch)
+        for i in range(n):
+            #Coordinate differences
+            dx = ch[(i+1)%n].x() - ch[i].x()
+            dy = ch[(i+1)%n].y() - ch[i].y()
+            
+            #Direction
+            sigma = atan2(dy, dx)
+            
+            #Rotate convex hull by -sigma
+            ch_rot = self.rotate(ch, -sigma)
+            
+            #Find mmb and its area
+            mmb_rot = self.mmb(ch_rot)
+            area_rot = self.getArea(mmb_rot)
+            
+            #Is it a better approximation?
+            if area_rot < area_min:
+                mmb_min = mmb_rot
+                area_min = area_rot
+                sigma_min = sigma
+        
+        #Back rotation
+        mmb_unrot = self.rotate(mmb_min, sigma_min)
+        
+        #Resize rectangle
+        mmb_res = self.resizeRectangle(mmb_unrot, pol) 
+        
+        return mmb_res   
+    
