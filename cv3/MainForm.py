@@ -112,7 +112,7 @@ class Ui_MainWindow(object):
         
         #Simplify building
         a = Algorithms()
-        maer = a.mbr(building)
+        maer = a.createMBR(building)
         
         #Update MBR
         self.Canvas.setMBR(maer)      
@@ -122,7 +122,18 @@ class Ui_MainWindow(object):
         
     
     def pcaClick(self):
-        pass
+        #Get building
+        building = self.Canvas.getBuilding()
+        
+        #Simplify building
+        a = Algorithms()
+        pca = a.createERPCA(building)
+        
+        #Update MBR
+        self.Canvas.setMBR(pca)      
+        
+        #Repaint screen
+        self.Canvas.repaint()
     
     
     def clearClick(self):

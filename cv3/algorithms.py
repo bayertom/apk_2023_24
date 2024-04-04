@@ -47,6 +47,7 @@ class Algorithms:
         #Point q outside polygon
         return 0
      
+     
     def get2LineAngle(self, p1:QPointF, p2:QPointF, p3:QPointF, p4:QPointF):
                 
         #Get 2 line angle
@@ -68,8 +69,6 @@ class Algorithms:
         
         return acos(max(min(arg, 1), -1))
         
-            
-  
                    
     def cHull(self, pol:QPolygonF):
         # CH construction using Jarvis scan algorithm
@@ -120,7 +119,7 @@ class Algorithms:
         return ch    
          
             
-    def mmb(self, pol:QPolygonF):
+    def createMMB(self, pol:QPolygonF):
         
         #Compute points with extreme coordinates
         px_min = min(pol, key = lambda k: k.x() )
@@ -224,7 +223,7 @@ class Algorithms:
         ch = self.cHull(pol)
         
         #Initialization
-        mmb_min = self.mmb(ch)
+        mmb_min = self.createMMB(ch)
         area_min = self.getArea(mmb_min)
         sigma_min = 0
         
@@ -242,7 +241,7 @@ class Algorithms:
             ch_rot = self.rotate(ch, -sigma)
             
             #Find mmb and its area
-            mmb_rot = self.mmb(ch_rot)
+            mmb_rot = self.createMMB(ch_rot)
             area_rot = self.getArea(mmb_rot)
             
             #Is it a better approximation?
@@ -259,9 +258,9 @@ class Algorithms:
         
         return mmb_res   
     
+    
     def createERPCA(self, pol:QPolygonF):
         #Create enclosing rectangle using PCA
-        #Create list of coordinates
         x = []
         y = []
         
@@ -282,14 +281,14 @@ class Algorithms:
         #Compute sigma
         sigma = atan2(V[0][1], V[0][0])
         
-        # Rotate polygon by minus sigma
+        #Rotate polygon by minus sigma
         pol_unrot = self.rotate(pol, -sigma)
         
         #Find min-max box
-        mmb = self.mmb(pol_unrot)
+        mmb = self.createMMB(pol_unrot)
         
         #Rotate min-max box (create enclosing rectangle)
-        er = self.rotate(mmb)
+        er = self.rotate(mmb, sigma)
         
         #Resize enclosing rectangle
         er_r = self.resizeRectangle(er, pol)
