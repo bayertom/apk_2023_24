@@ -2,6 +2,8 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 from math import *
+from numpy import *
+from scipy.linalg import *
 
 
 #Processing data
@@ -215,7 +217,7 @@ class Algorithms:
         return rectR
     
     
-    def mbr(self, pol : QPolygonF):
+    def createMBR(self, pol : QPolygonF):
         #Create minimum bounding rectangle        
     
         #Compute convex hull
@@ -256,4 +258,41 @@ class Algorithms:
         mmb_res = self.resizeRectangle(mmb_unrot, pol) 
         
         return mmb_res   
+    
+    def createERPCA(self, pol:QPolygonF):
+        #Create enclosing rectangle using PCA
+        #Create list of coordinates
+        x = []
+        y = []
+        
+        #Add coordinates to lists
+        for p in pol:
+            x.append(p.x())
+            y.append(p.y())
+            
+        #Create array
+        P = array([x, y])
+        
+        #Compute covariation matrix
+        C = cov(P)
+        
+        #Singular value decomposition
+        [U, S, V] = svd(C)
+        
+        #Compute sigma
+        sigma = atan2(V[0][1], V[0][0])
+        
+        # Rotate polygon by minus sigma
+        pol_unrot = self.rotate(pol, -sigma)
+        
+        #Find min-max box
+        mmb = self.mmb(pol_unrot)
+        
+        #Rotate min-max box (create enclosing rectangle)
+        er = self.rotate(mmb)
+        
+        #Resize enclosing rectangle
+        er_r = self.resizeRectangle(er, pol)
+        
+        return er_r
     
