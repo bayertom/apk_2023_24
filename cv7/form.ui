@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1116</width>
-    <height>872</height>
+    <width>1111</width>
+    <height>1015</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,8 +25,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1116</width>
-     <height>22</height>
+     <width>1111</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -41,18 +41,18 @@
     <property name="title">
      <string>Analysis</string>
     </property>
-    <addaction name="actionCreate_DTM"/>
+    <addaction name="actionCreate_DT"/>
     <addaction name="separator"/>
-    <addaction name="actionCreate_contour_lines"/>
-    <addaction name="actionAnalyze_slope"/>
-    <addaction name="actionAnalyze_exposition"/>
+    <addaction name="actionCreateContouLines"/>
+    <addaction name="actionAnalyzeSlope"/>
+    <addaction name="actionAnalyzeExposition"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionDTM"/>
-    <addaction name="actionContour_lines"/>
+    <addaction name="actionDT"/>
+    <addaction name="actionContour_lines_2"/>
     <addaction name="actionSlope"/>
     <addaction name="actionExposition"/>
    </widget>
@@ -61,6 +61,7 @@
      <string>Clear</string>
     </property>
     <addaction name="actionClear_results"/>
+    <addaction name="separator"/>
     <addaction name="actionClear_all"/>
    </widget>
    <addaction name="menuFile"/>
@@ -81,11 +82,11 @@
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="separator"/>
-   <addaction name="actionCreate_DTM"/>
+   <addaction name="actionCreate_DT"/>
    <addaction name="separator"/>
-   <addaction name="actionCreate_contour_lines"/>
-   <addaction name="actionAnalyze_slope"/>
-   <addaction name="actionAnalyze_exposition"/>
+   <addaction name="actionCreateContouLines"/>
+   <addaction name="actionAnalyzeSlope"/>
+   <addaction name="actionAnalyzeExposition"/>
    <addaction name="separator"/>
    <addaction name="actionClear_results"/>
    <addaction name="actionClear_all"/>
@@ -100,6 +101,9 @@
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="toolTip">
+    <string>Open file</string>
+   </property>
   </action>
   <action name="actionExit">
    <property name="icon">
@@ -109,17 +113,26 @@
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="toolTip">
+    <string>Exit application</string>
+   </property>
+   <property name="shortcut">
+    <string>Backspace</string>
+   </property>
   </action>
-  <action name="actionCreate_DTM">
+  <action name="actionCreate_DT">
    <property name="icon">
     <iconset resource="image.qrc">
      <normaloff>:/images/icons/triangles2.png</normaloff>:/images/icons/triangles2.png</iconset>
    </property>
    <property name="text">
-    <string>Create DTM</string>
+    <string>Create DT</string>
+   </property>
+   <property name="toolTip">
+    <string>Create Delaunay triangulation</string>
    </property>
   </action>
-  <action name="actionCreate_contour_lines">
+  <action name="actionCreateContouLines">
    <property name="icon">
     <iconset resource="image.qrc">
      <normaloff>:/images/icons/contours2.png</normaloff>:/images/icons/contours2.png</iconset>
@@ -128,7 +141,7 @@
     <string>Create contour lines</string>
    </property>
   </action>
-  <action name="actionAnalyze_slope">
+  <action name="actionAnalyzeSlope">
    <property name="icon">
     <iconset resource="image.qrc">
      <normaloff>:/images/icons/slope2.png</normaloff>:/images/icons/slope2.png</iconset>
@@ -136,8 +149,11 @@
    <property name="text">
     <string>Analyze slope</string>
    </property>
+   <property name="toolTip">
+    <string>Analyze DTM slope</string>
+   </property>
   </action>
-  <action name="actionAnalyze_exposition">
+  <action name="actionAnalyzeExposition">
    <property name="icon">
     <iconset resource="image.qrc">
      <normaloff>:/images/icons/orientation2.png</normaloff>:/images/icons/orientation2.png</iconset>
@@ -145,16 +161,19 @@
    <property name="text">
     <string>Analyze exposition</string>
    </property>
+   <property name="toolTip">
+    <string>Analyze DTM exposition</string>
+   </property>
   </action>
-  <action name="actionDTM">
+  <action name="actionDT">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>DTM</string>
+    <string>DT</string>
    </property>
   </action>
-  <action name="actionContour_lines">
+  <action name="actionContour_lines_2">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -220,13 +239,13 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionCreate_DTM</sender>
+   <sender>actionCreate_DT</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
@@ -236,13 +255,13 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionCreate_contour_lines</sender>
+   <sender>actionAnalyzeSlope</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
@@ -252,13 +271,13 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionAnalyze_slope</sender>
+   <sender>actionAnalyzeExposition</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
@@ -268,13 +287,13 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionAnalyze_exposition</sender>
+   <sender>actionCreateContouLines</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
@@ -284,8 +303,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -300,8 +319,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -316,8 +335,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -332,13 +351,13 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionDTM</sender>
+   <sender>actionDT</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
@@ -348,13 +367,13 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionContour_lines</sender>
+   <sender>actionContour_lines_2</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
@@ -364,8 +383,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -380,8 +399,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -396,8 +415,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>557</x>
-     <y>435</y>
+     <x>555</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
