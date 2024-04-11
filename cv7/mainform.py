@@ -124,20 +124,67 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionExit)
 
         self.retranslateUi(MainWindow)
-        self.actionAnalyze_exposition.triggered.connect(MainWindow.close) # type: ignore
-        self.actionAnalyze_slope.triggered.connect(MainWindow.close) # type: ignore
-        self.actionClear_all.triggered.connect(MainWindow.close) # type: ignore
-        self.actionCountour_lines.triggered.connect(MainWindow.close) # type: ignore
-        self.actionDTM.triggered.connect(MainWindow.close) # type: ignore
-        self.actionExit.triggered.connect(MainWindow.close) # type: ignore
-        self.actionExposition.triggered.connect(MainWindow.close) # type: ignore
-        self.actionOpen.triggered.connect(MainWindow.close) # type: ignore
-        self.actionResults.triggered.connect(MainWindow.close) # type: ignore
-        self.actionSlope.triggered.connect(MainWindow.close) # type: ignore
-        self.actionCreate_contour_lines.triggered.connect(MainWindow.close) # type: ignore
-        self.actionCreate_DTM.triggered.connect(MainWindow.close) # type: ignore
+        
+        self.actionOpen.triggered.connect(self.openClick) 
+        self.actionCreate_DTM.triggered.connect(self.createDTClick)
+        self.actionCreate_contour_lines.triggered.connect(self.createContourLinesClick)
+        self.actionAnalyze_slope.triggered.connect(self.analyzeSlopeClick)
+        self.actionAnalyze_exposition.triggered.connect(self.analyzeExpositionClick) 
+        self.actionResults.triggered.connect(self.clearClick)
+        self.actionClear_all.triggered.connect(self.clearAllClick) 
+        
+        self.actionDTM.triggered.connect(self.viewDTClick)
+        self.actionCountour_lines.triggered.connect(self.viewContourLinesClick)
+        self.actionSlope.triggered.connect(self.viewSlopeClick)
+        self.actionExposition.triggered.connect(self.viewExpositionClick) 
+        self.actionExit.triggered.connect(MainWindow.close)
+        
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+     
+    def openClick(self):
+        pass 
+    
+    
+    def createDTClick(self):
+        pass 
+    
+        
+    def createContourLinesClick(self):
+        pass
+    
+        
+    def analyzeSlopeClick(self):
+        pass
+    
+        
+    def analyzeExpositionClick(self):
+        pass
+    
 
+    def clearClick(self):
+        pass        
+    
+    
+    def clearAllClick(self):
+        pass
+    
+    
+    def viewDTClick(self):
+        pass
+
+
+    def viewContourLinesClick(self):
+        pass
+    
+    
+    def viewSlopeClick(self):
+        pass
+
+
+    def viewExpositionClick(self):
+        pass
+    
+    
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "DTM Analysis"))
