@@ -125,6 +125,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         
+        #User fnctions
         self.actionOpen.triggered.connect(self.openClick) 
         self.actionCreate_DTM.triggered.connect(self.createDTClick)
         self.actionCreate_contour_lines.triggered.connect(self.createContourLinesClick)
