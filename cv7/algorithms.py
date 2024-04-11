@@ -319,5 +319,50 @@ class Algorithms:
         return -1
     
         
-        def getNearestPoint(self, q:QPoint3DF, points:list[QPoint3DF]):
-            #Find point nearest to q
+    def getNearestPoint(self, q:QPoint3DF, points:list[QPoint3DF]):
+        #Find point nearest to q
+        p_nearest = None
+        dist_nearest = inf
+        
+        #Process all points
+        for p in points:
+            #Point p differente from q
+            if p!=q:
+                #Compute distance
+                dx = p.x() - q.x()
+                dy = p.y() - q.y()
+                
+                dist = sqrt(dx**2 + dy**2)
+                
+                #Update nearest point
+                if dist < dist_nearest:
+                    p_nearest = p
+                    dist_nearest = dist
+        
+        return p_nearest
+        
+                
+    def getDelaunayPoint(self, start:QPoint3DF,end:QPoint3DF, points:list[QPoint3DF]):
+        #Find Delaunay point to an edge
+        p_dt = None
+        angle_max = 0   
+             
+        #Process all points
+        for p in points:
+            
+            #Point p differente from q
+            if start != p and end != p:
+                
+                #Point in the left halfplane
+                if self.getPointAndLinePosition(p, start, end) == 1:
+                    
+                    #Compute angle
+                    angle = self.get2LineAngle(p, start, p, end)
+                
+                    # Update maximum
+                    if angle > angle_max:
+                        angle_max = angle
+                        p_dt = p
+                
+        return p_dt
+            
