@@ -365,4 +365,3 @@ class Algorithms:
                         p_dt = p
                 
         return p_dt
-            
