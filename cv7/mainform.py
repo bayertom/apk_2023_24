@@ -141,6 +141,7 @@ class Ui_MainWindow(object):
         
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
      
+     
     def openClick(self):
         pass 
     
