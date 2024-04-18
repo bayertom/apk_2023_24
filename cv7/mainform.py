@@ -163,10 +163,6 @@ class Ui_MainWindow(object):
         self.Canvas.repaint()
         
         
-        
-    
-    
-        
     def createContourLinesClick(self):
         pass
     
@@ -184,7 +180,11 @@ class Ui_MainWindow(object):
     
     
     def clearAllClick(self):
-        pass
+        #Clear all data
+        self.Canvas.clearAll()
+        
+        #Repaint screen
+        self.Canvas.repaint()
     
     
     def viewDTClick(self):
