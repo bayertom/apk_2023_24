@@ -5,6 +5,7 @@ from math import *
 from numpy import *
 from scipy.linalg import *
 from qpoint3df import *
+from edge import *
 
 #Processing data
 class Algorithms:
@@ -365,3 +366,66 @@ class Algorithms:
                         p_dt = p
                 
         return p_dt
+    
+    
+    def updateAEL (self, e: Edge, ael: list[Edge]):
+        #Update active edges list
+        e_op = e.changeOrientation()
+        
+        #Is edge in ael?
+        if e_op in ael:
+            #Remove edge
+            ael.remove(e_op)
+            
+        #Add edge to ael    
+        else:
+            ael.append(e)
+                
+    def createDT(self, points: list[QPoint3DF]):
+        #Create Delaunay triangulation with incremental method
+        dt = []
+        ael = []
+
+        #Sort points by x
+        p1 = min(points, key = lambda k: k.x() )
+        
+        #Find nearest point
+        p2 = self.getNearestPoint(p1, points)
+        
+        #Create edges
+        e = Edge(p1, p2)
+        e_op = Edge(p2, p1)
+        
+        #Add both edges to ael
+        ael.append(e)
+        ael.append(e_op)
+        
+        # Repeat until ael is empty
+        while ael:
+            # Take first edge
+            e1 = ael.pop()
+            
+            #Change orientation
+            e1_op = e1.changeOrientation()
+            
+            #Find optimal Delaunay point
+            p_dt = self.getDelaunayPoint(e1_op.getStart(), e1_op.getEnd(), points)
+
+            #Did we find a suitable point?
+            if p_dt != None:
+                #create remaining edges
+                e2 = Edge(e1_op.getEnd(), p_dt)
+                e3 = Edge(p_dt, e1_op.getStart())
+                
+                #Create Delaunay triangle
+                dt.append(e1_op)
+                dt.append(e2)
+                dt.append(e3)
+                
+                #Update AEL
+                self.updateAEL(e2, ael)
+                self.updateAEL(e3, ael)
+                
+        return dt
+                
+    

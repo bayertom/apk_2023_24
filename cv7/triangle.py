@@ -13,7 +13,6 @@ class Triangle:
         
         self.slope = slope
         self.exposition = exposition
-    
         
     def getP1(self):
         return self.p1

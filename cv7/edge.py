@@ -1,7 +1,7 @@
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
-from QPoint3DF import *
+from qpoint3df import *
 
 class Edge:
     
@@ -20,5 +20,10 @@ class Edge:
     
     def changeOrientation(self):
         return Edge(self.end, self.start)
+    
+    
+    def __eq__(self, other):
+        return (self.start == other.start) and (self.end == other.end)
+        
     
     
