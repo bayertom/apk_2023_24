@@ -36,15 +36,6 @@ class Draw(QWidget):
 
         #Start drawing
         qp.begin(self)
-
-        #Set graphic attributes
-        qp.setPen(Qt.GlobalColor.black)
-        qp.setBrush(Qt.GlobalColor.yellow)
-
-        #Draw points
-        r = 10
-        for p in self.points:
-            qp.drawEllipse(int(p.x()-r), int(p.y()-r), 2*r, 2*r)
             
         #Set graphic attributes
         qp.setPen(Qt.GlobalColor.green)
@@ -54,6 +45,15 @@ class Draw(QWidget):
         for e in self.dt:
             qp.drawLine(int(e.getStart().x()), int(e.getStart().y()), int(e.getEnd().x()), int(e.getEnd().y()))
                 
+       
+        #Set graphic attributes
+        qp.setPen(Qt.GlobalColor.black)
+        qp.setBrush(Qt.GlobalColor.yellow)
+
+        #Draw points
+        r = 10
+        for p in self.points:
+            qp.drawEllipse(int(p.x()-r), int(p.y()-r), 2*r, 2*r)
        
         #Draw contour lines        
         

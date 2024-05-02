@@ -427,5 +427,100 @@ class Algorithms:
                 self.updateAEL(e3, ael)
                 
         return dt
-                
     
+    def getContourPoint(self, p1:QPoint3DF, p2:QPoint3DF, z:float):
+        #Intersection of triangle and horizontal plane
+        xb = (p2.x() - p1.x())/(p2.getZ()-p1.getZ()) * (z-p1.getZ()) + p1.x()
+        yb = (p2.y() - p1.y())/(p2.getZ()-p1.getZ()) * (z-p1.getZ()) + p1.y()
+        
+        return QPoint3DF(xb, yb, z)
+    
+    def createContourLines(self, dt, zmin, zmax, dz):
+        #Create contour lines defined by interval and step
+        contours = list[Edge]
+                
+        #Process all triangles
+        for i in range(0, len(dt), 3):
+            #Get vertices of triangle
+            p1 = dt[i].getStart()
+            p2 = dt[i].getEnd()
+            p3 = dt[i + 1].getEnd()
+            
+            #Get z coordiantes
+            z1 = p1.getZ()
+            z2 = p2.getZ()
+            z3 = p3.getZ()
+            
+            #Create all contour lines
+            for z in range(zmin, zmax, dz):
+                
+                #Compute edge height differences
+                dz1 = z - z1
+                dz2 = z - z2
+                dz3 = z - z3
+                
+                #skip coplanar triangle
+                if dz1 == 0 and dz2 == 0 and dz3 == 0:
+                    continue
+                
+                #Edge p1 and p2 is colinear
+                elif dz1 ==0 and dz2 ==0:
+                    contours.append(dt[i])
+                
+                #Edge p2 and p3 is colinear
+                elif dz2 ==0 and dz3==0:
+                    contours.append(dt[i+1]) 
+                
+                #Edge p3 and p1 is colinear
+                elif dz3 ==0 and dz1==0:
+                    contours.append(dt[i+2]) 
+                    
+                
+                #Edges p1, p2 and p2, p3 intersected by plane
+                elif dz1 * dz2 <= 0 and dz2 * dz3 <= 0:
+                    
+                    #Compute intersections
+                    a = self.getContourPoint(p1, p2, z)
+                    b = self.getContourPoint(p2, p3, z)
+                    
+                    #Create edge
+                    e1 = Edge(a, b)
+                    
+                    #Add edge to contour lines
+                    contours.append(e1)
+                
+                #Edges p2, p3 and p3, p1 intersected by plane
+                elif dz2 * dz3 <= 0 and dz3 * dz1 <= 0:
+                    
+                    #Compute intersections
+                    a = self.getContourPoint(p2, p3, z)
+                    b = self.getContourPoint(p3, p1, z)
+                    
+                    #Create edge
+                    e1 = Edge(a, b)
+                    
+                    #Add edge to contour lines
+                    contours.append(e1)
+                
+                #Edges p3, p1 and p1, p2 intersected by plane
+                elif dz3 * dz1 <= 0 and dz1 * dz2 <= 0:
+                    
+                    #Compute intersections
+                    a = self.getContourPoint(p3, p1, z)
+                    b = self.getContourPoint(p1, p2, z)
+                    
+                    #Create edge
+                    e1 = Edge(a, b)
+                    
+                    #Add edge to contour lines
+                    contours.append(e1)
+                
+        return contours
+                
+                
+                
+                
+                
+                
+                
+                
