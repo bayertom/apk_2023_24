@@ -11,6 +11,7 @@ class Draw(QWidget):
         super().__init__(*args, **kwargs)
         self.points = []
         self.dt = []
+        self.contours = []
 
 
     def mousePressEvent(self, e:QMouseEvent):
@@ -19,7 +20,7 @@ class Draw(QWidget):
         y = e.position().y()
         
         #Create new point
-        p = QPointF(x,y)
+        p = QPoint3DF(x, y, 0)
 
         #Add point to the point cloud
         self.points.append(p)
@@ -44,8 +45,15 @@ class Draw(QWidget):
         #Draw triangulation
         for e in self.dt:
             qp.drawLine(int(e.getStart().x()), int(e.getStart().y()), int(e.getEnd().x()), int(e.getEnd().y()))
+
+        #Set graphic attributes
+        qp.setPen(Qt.GlobalColor.gray)
+        qp.setBrush(Qt.GlobalColor.yellow)
+        
+        #Draw contour lines
+        for e in self.contours:
+            qp.drawLine(int(e.getStart().x()), int(e.getStart().y()), int(e.getEnd().x()), int(e.getEnd().y()))
                 
-       
         #Set graphic attributes
         qp.setPen(Qt.GlobalColor.black)
         qp.setBrush(Qt.GlobalColor.yellow)
@@ -69,6 +77,9 @@ class Draw(QWidget):
         # Return points
         return self.points
     
+    def getDT(self):
+        #Return DT
+        return self.dt
     
     def clearAll(self):
         #Clear points
@@ -83,5 +94,9 @@ class Draw(QWidget):
     
     def setDT(self, dt: list[Edge]):
         self.dt = dt
+        
+        
+    def setContours(self, contours: list[Edge]):
+        self.contours = contours
         
     
