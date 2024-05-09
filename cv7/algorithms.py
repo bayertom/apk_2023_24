@@ -381,6 +381,7 @@ class Algorithms:
         else:
             ael.append(e)
                 
+                
     def createDT(self, points: list[QPoint3DF]):
         #Create Delaunay triangulation with incremental method
         dt = []
@@ -428,6 +429,7 @@ class Algorithms:
                 
         return dt
     
+    
     def getContourPoint(self, p1:QPoint3DF, p2:QPoint3DF, z:float):
         #Intersection of triangle and horizontal plane
         xb = (p2.x() - p1.x())/(p2.getZ()-p1.getZ()) * (z-p1.getZ()) + p1.x()
@@ -435,9 +437,10 @@ class Algorithms:
         
         return QPoint3DF(xb, yb, z)
     
+    
     def createContourLines(self, dt, zmin, zmax, dz):
         #Create contour lines defined by interval and step
-        contours = list[Edge]
+        contours = []
                 
         #Process all triangles
         for i in range(0, len(dt), 3):
