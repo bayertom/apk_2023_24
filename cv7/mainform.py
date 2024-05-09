@@ -186,7 +186,7 @@ class Ui_MainWindow(object):
         dt = self.Canvas.getDT()
         
         #Create contour lines
-        contours = a.createContourLines(dt, 100, 1000, 10)
+        contours = a.createContourLines(dt, 100, 1500, 10)
         
         #Set results
         self.Canvas.setContours(contours)
@@ -196,8 +196,37 @@ class Ui_MainWindow(object):
     
         
     def analyzeSlopeClick(self):
-        pass
     
+        #Get Delaunay triangulation
+        a = Algorithms()
+        
+        #Do we have a triangulation
+        dt = self.Canvas.getDT()
+        
+        #No triangulation constructed
+        if not dt:     
+            
+            #Get points
+            points =  self.Canvas.getPoints() 
+            
+            #Create DT   
+            dt = a.createDT(points)
+            
+            #Set results
+            self.Canvas.setDT(dt)
+        
+        #Do we have a triangulation
+        dt = self.Canvas.getDT()
+        
+        #Analyze dtm slope
+        dtm_slope = a.analyzeDTMSlope(dt)
+        
+        #Set results
+        self.Canvas.setDTMSlope(dtm_slope)
+        
+        #Repaint screen
+        self.Canvas.repaint()    
+        
         
     def analyzeExpositionClick(self):
         pass

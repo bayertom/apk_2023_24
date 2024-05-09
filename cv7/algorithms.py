@@ -6,6 +6,7 @@ from numpy import *
 from scipy.linalg import *
 from qpoint3df import *
 from edge import *
+from triangle import *
 
 #Processing data
 class Algorithms:
@@ -519,11 +520,93 @@ class Algorithms:
                     contours.append(e1)
                 
         return contours
+    
+    
+    def computeSlope(self, p1:QPoint3DF, p2:QPoint3DF, p3:QPoint3DF):
+        #Compute triangle slope
+        
+        #Directions
+        ux = p1.x() - p2.x() 
+        uy = p1.y() - p2.y() 
+        uz = p1.getZ() - p2.getZ()        
+        
+        vx = p3.x() - p2.x() 
+        vy = p3.y() - p2.y() 
+        vz = p3.getZ() - p2.getZ()        
+        
+        #Normal vector     
+        nx = uy * vz - vy * uz
+        ny = - (ux*vz - vx * uz)
+        nz = ux * vy - vx * uy
+        
+        #Norm
+        norm = (nx**2 +ny**2 + nz**2)**(1/2)
+
+        return acos(abs(nz)/norm)        
+        
+        
+    def computeAspect(self, p1:QPoint3DF, p2:QPoint3DF, p3:QPoint3DF):
+        #Compute triangle aspect
+        
+        #Directions
+        ux = p1.x() - p2.x() 
+        uy = p1.y() - p2.y() 
+        uz = p1.getZ() - p2.getZ()        
+        
+        vx = p3.x() - p2.x() 
+        vy = p3.y() - p2.y() 
+        vz = p3.getZ() - p2.getZ()        
+        
+        #Normal vector     
+        nx = uy * vz - vy * uz
+        ny = - (ux*vz - vx * uz)
+
+        return atan2(nx, ny)     
                 
                 
-                
-                
-                
-                
-                
+    
+    def analyzeDTMSlope(self, dt:list [Edge]):
+        #analyze dtm slope 
+        dtm_slope: list [Triangle] = []    
+        
+        #Process all triangles
+        for i in range(0, len(dt), 3):
+            #Get vertices of triangle
+            p1 = dt[i].getStart()
+            p2 = dt[i].getEnd()
+            p3 = dt[i + 1].getEnd()
+            
+            #Get slope
+            slope = self.computeSlope(p1, p2, p3)
+            
+            #Create triangle
+            triangle = Triangle(p1, p2, p3, slope, 0)
+            
+            #Add triangle to the list
+            dtm_slope.append(triangle)
+            
+        return dtm_slope
+    
+    
+    def analyzeDTMAspect(self, dt:list [Edge]):
+        #analyze dtm aspect 
+        dtm_aspect: list [Triangle] = []    
+        
+        #Process all triangles
+        for i in range(0, len(dt), 3):
+            #Get vertices of triangle
+            p1 = dt[i].getStart()
+            p2 = dt[i].getEnd()
+            p3 = dt[i + 1].getEnd()
+            
+            #Get aspect
+            aspect = self.computeAspect(p1, p2, p3)
+            
+            #Create triangle
+            triangle = Triangle(p1, p2, p3, 0, aspect)
+            
+            #Add triangle to the list
+            dtm_aspect.append(triangle)
+            
+        return dtm_aspect
                 
