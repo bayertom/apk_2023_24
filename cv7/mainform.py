@@ -9,6 +9,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from draw import Draw
 from algorithms import *
+from Settings import *
 
 
 class Ui_MainWindow(object):
@@ -135,6 +136,11 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionParameters)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionExit)
+        
+        #Settings
+        self.settings = QtWidgets.QDialog()
+        self.ui = Ui_Settings()
+        self.ui.setupUi(self.settings)
 
         self.retranslateUi(MainWindow)
         
@@ -272,11 +278,11 @@ class Ui_MainWindow(object):
     def viewExpositionClick(self):
         pass
     
-    def setParameters(self):
-        pass
     
- 
-
+    def setParameters(self):
+        self.settings.show()
+    
+    
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "DTM Analysis"))
