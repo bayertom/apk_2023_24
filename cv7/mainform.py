@@ -156,7 +156,8 @@ class Ui_MainWindow(object):
         self.actionDT.triggered.connect(self.viewDTClick)
         self.actionContour_lines_2.triggered.connect(self.viewContourLinesClick)
         self.actionSlope.triggered.connect(self.viewSlopeClick)
-        self.actionExposition.triggered.connect(self.viewExpositionClick) 
+        self.actionExposition.triggered.connect(self.viewExpositionClick)
+        
         self.actionExit.triggered.connect(MainWindow.close)
 
         self.actionParameters.triggered.connect(self.setParameters)
@@ -181,6 +182,9 @@ class Ui_MainWindow(object):
         #Repaint screen
         self.Canvas.repaint()
         
+        #Check menu item
+        self.actionDT.setChecked(True)
+        
         
     def createContourLinesClick(self):
         #Get Delaunay triangulation
@@ -204,14 +208,22 @@ class Ui_MainWindow(object):
         #Do we have a triangulation
         dt = self.Canvas.getDT()
         
+        #Get contour line parameters
+        zmin = float(self.ui.lineEdit.text())
+        zmax = float(self.ui.lineEdit_2.text())
+        dz = float(self.ui.lineEdit_3.text())
+        
         #Create contour lines
-        contours = a.createContourLines(dt, 100, 1500, 10)
+        contours = a.createContourLines(dt, zmin, zmax, dz)
         
         #Set results
         self.Canvas.setContours(contours)
         
         #Repaint screen
         self.Canvas.repaint()
+        
+        #Check menu item
+        self.actionContour_lines_2.setChecked(True)
     
         
     def analyzeSlopeClick(self):
@@ -244,7 +256,10 @@ class Ui_MainWindow(object):
         self.Canvas.setDTMSlope(dtm_slope)
         
         #Repaint screen
-        self.Canvas.repaint()    
+        self.Canvas.repaint()  
+        
+        #Check menu item
+        self.actionSlope.setChecked(True)  
         
         
     def analyzeExpositionClick(self):
@@ -252,7 +267,11 @@ class Ui_MainWindow(object):
     
 
     def clearClick(self):
-        pass        
+        #Clear results
+        self.Canvas.clearResults()
+        
+        #Repaint screen
+        self.Canvas.repaint()    
     
     
     def clearAllClick(self):
@@ -264,19 +283,35 @@ class Ui_MainWindow(object):
     
     
     def viewDTClick(self):
-        pass
+        #Enable/disable drawing
+        self.Canvas.setViewDT(self.actionDT.isChecked())
+        
+        #Update
+        self.Canvas.update()
 
 
     def viewContourLinesClick(self):
-        pass
+        #Enable/disable drawing
+        self.Canvas.setViewContourLines(self.actionContour_lines_2.isChecked())
+        
+        #Update
+        self.Canvas.update()
     
     
     def viewSlopeClick(self):
-        pass
+        #Enable/disable drawing
+        self.Canvas.setViewSlope(self.actionSlope.isChecked())
+        
+        #Update
+        self.Canvas.update()
 
 
     def viewExpositionClick(self):
-        pass
+        #Enable/disable drawing
+        self.Canvas.setViewAspect(self.actionExposition.isChecked())
+        
+        #Update
+        self.Canvas.update()
     
     
     def setParameters(self):

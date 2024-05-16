@@ -17,11 +17,10 @@ class Draw(QWidget):
         self.contours = []
         self.dtm_slope = []
         self.dtm_aspect = []
-        self.drawDT = True
-        self.drawContourLines = True
-        self.drawSlope = True
-        self.drawAspect = True
-        
+        self.viewDT = True
+        self.viewContourLines = True
+        self.viewSlope = True
+        self.viewAspect = True
 
 
     def mousePressEvent(self, e:QMouseEvent):
@@ -53,27 +52,26 @@ class Draw(QWidget):
         #Start drawing
         qp.begin(self)
         
-        
-        #Set graphic attributes
-        qp.setPen(Qt.GlobalColor.gray)
+        if self.viewSlope:
+            #Set graphic attributes
+            qp.setPen(Qt.GlobalColor.gray)
       
-        #Draw slope
-        for t in self.dtm_slope:
-            #Get slope
-            slope = t.getSlope()
+            #Draw slope
+            for t in self.dtm_slope:
+                #Get slope
+                slope = t.getSlope()
             
-            #Convert slope to color
-            mju = 2*255/pi
-            col = int(255 - mju*slope)
-            color = QColor(col, col, col)
-            qp.setBrush(color)
+                #Convert slope to color
+                mju = 2*255/pi
+                col = int(255 - mju*slope)
+                color = QColor(col, col, col)
+                qp.setBrush(color)
             
-            #Draw triangle
-            qp.drawPolygon(t.getVertices())
+                #Draw triangle
+                qp.drawPolygon(t.getVertices())
             
-        
         #DRAW DT
-        if self.drawDT:     
+        if self.viewDT:     
             #Set graphic attributes
             qp.setPen(Qt.GlobalColor.green)
             qp.setBrush(Qt.GlobalColor.transparent)
@@ -82,17 +80,18 @@ class Draw(QWidget):
             for e in self.dt:
                 qp.drawLine(int(e.getStart().x()), int(e.getStart().y()), int(e.getEnd().x()), int(e.getEnd().y()))
 
-        #Set graphic attributes
-        qp.setPen(Qt.GlobalColor.gray)
-        qp.setBrush(Qt.GlobalColor.yellow)
+        if self.viewContourLines:
+            #Set graphic attributes
+            qp.setPen(Qt.GlobalColor.gray)
+            qp.setBrush(Qt.GlobalColor.yellow)
         
-        #Draw contour lines
-        for e in self.contours:
-            qp.drawLine(int(e.getStart().x()), int(e.getStart().y()), int(e.getEnd().x()), int(e.getEnd().y()))
-                
-        #Set graphic attributes
-        qp.setPen(Qt.GlobalColor.black)
-        qp.setBrush(Qt.GlobalColor.yellow)
+            #Draw contour lines
+            for e in self.contours:
+               qp.drawLine(int(e.getStart().x()), int(e.getStart().y()), int(e.getEnd().x()), int(e.getEnd().y()))
+                 
+            #Set graphic attributes
+            qp.setPen(Qt.GlobalColor.black)
+            qp.setBrush(Qt.GlobalColor.yellow)
 
         #Draw points
         r = 10
@@ -117,12 +116,29 @@ class Draw(QWidget):
         #Clear points
         self.points.clear()
         
-        #Clear DT
-        self.dt.clear()
+        #Clear results
+        self.clearResults()
         
         #Repaint screen
         self.repaint()
         
+        
+    def clearResults(self):
+        #Clear DT
+        self.dt.clear()
+        
+        #Clear contours
+        self.contours.clear()
+
+        #Clear slope
+        self.dtm_slope.clear()
+        
+        #Clear aspect
+        self.dtm_aspect.clear()
+        
+        #Repaint screen
+        self.repaint()      
+    
     
     def setDT(self, dt: list[Edge]):
         self.dt = dt
@@ -139,3 +155,18 @@ class Draw(QWidget):
     def setDTMSlope(self, dtm_slope: list[Triangle]):
         self.dtm_slope = dtm_slope
     
+    
+    def setViewDT(self, viewDT):
+        self.viewDT = viewDT
+        
+        
+    def setViewContourLines(self, viewContourLines):
+        self.viewContourLines = viewContourLines
+        
+        
+    def setViewSlope(self, viewSlope):
+        self.viewSlope = viewSlope
+        
+        
+    def setViewAspect(self, viewAspect):
+        self.viewAspect = viewAspect

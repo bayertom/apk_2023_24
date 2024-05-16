@@ -456,7 +456,7 @@ class Algorithms:
             z3 = p3.getZ()
             
             #Create all contour lines
-            for z in range(zmin, zmax, dz):
+            for z in arange(zmin, zmax, dz):
                 
                 #Compute edge height differences
                 dz1 = z - z1
